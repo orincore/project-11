@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import adarshImg from '../assets/images/adarsh.jpg';
 import iciciLogo from '../assets/images/icici.png';
 import { Helmet } from 'react-helmet-async';
+import Loader from '../components/Loader';
 
 const Home: React.FC = () => {
   const { isDarkMode } = useTheme();
@@ -86,7 +87,7 @@ const Home: React.FC = () => {
         `}</script>
       </Helmet>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-950">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 opacity-90" />
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse" />
@@ -117,7 +118,7 @@ const Home: React.FC = () => {
               className="space-y-4"
             >
               <p className="text-xl sm:text-2xl text-purple-200 max-w-3xl mx-auto">
-                Building the future of web development
+                Orincore is a leading web development and AI solutions company in Mumbai. Hire a React developer or AI expert for your next project. Building the future of web development.
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-lg text-purple-300">
                 {['Innovative Solutions', 'Quality Development', 'Client Success'].map((phrase, index) => (
@@ -138,15 +139,33 @@ const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="pt-8 flex justify-center"
+              className="pt-8 flex flex-col sm:flex-row justify-center gap-4"
             >
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2"
+                >
+                  <span>Start Your Project Today</span>
+                </motion.button>
+              </Link>
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 flex items-center space-x-2"
+                >
+                  <span>Get a Free Consultation</span>
+                </motion.button>
+              </Link>
               <Link to="/portfolio">
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2"
                 >
-                  <span>Explore My Work</span>
+                  <span>See Our Work</span>
                   <ArrowRight className="w-5 h-5" />
                 </motion.button>
               </Link>
@@ -179,7 +198,7 @@ const Home: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="rounded-2xl shadow-xl bg-gradient-to-r from-orange-100/80 via-white/80 to-purple-100/80 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-10 flex flex-col items-center text-center border border-orange-200 dark:border-gray-700"
+            className={`rounded-2xl shadow-xl p-10 flex flex-col items-center text-center border ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-gray-200'}`}
           >
             <div className="mb-6 flex justify-center">
               <img
@@ -192,7 +211,7 @@ const Home: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent">
               Recognised by ICICI Lombard
             </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-xl mx-auto">
+            <p className={`text-lg max-w-xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>
               Orincore Technologies is proud to be recognised by ICICI Lombard for our commitment to innovation, reliability, and excellence in digital solutions. This recognition inspires us to deliver even greater value to our clients and partners.
             </p>
           </motion.div>
@@ -207,12 +226,14 @@ const Home: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="rounded-2xl shadow-xl bg-gradient-to-r from-purple-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-8 sm:px-16 py-14 flex flex-col items-center text-center border border-purple-200 dark:border-gray-700 w-full max-w-5xl mx-auto"
+            className={`rounded-2xl shadow-xl px-8 sm:px-16 py-14 flex flex-col items-center text-center border w-full max-w-5xl mx-auto ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-purple-200'}`}
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
               What Our Clients Say
             </h2>
-            <BestReviewsSlider />
+            <div className={isDarkMode ? 'py-8 text-lg text-gray-300' : 'py-8 text-lg text-black'}>
+              No reviews yet.
+            </div>
             <Link to="/reviews" className="mt-8 inline-block">
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -230,7 +251,7 @@ const Home: React.FC = () => {
       {/* Introduction Section */}
       <section id="introduction" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col lg:flex-row gap-12 items-center">
             <motion.div
               ref={ref}
               initial="hidden"
@@ -240,7 +261,7 @@ const Home: React.FC = () => {
                 visible: { opacity: 1, x: 0 }
               }}
               transition={{ duration: 0.8 }}
-              className="space-y-6"
+              className="space-y-6 order-2 lg:order-1 w-full"
             >
               <h2 className={`text-4xl sm:text-5xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 Hi, I'm <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
@@ -274,7 +295,7 @@ const Home: React.FC = () => {
                 visible: { opacity: 1, x: 0 }
               }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center"
+              className="flex justify-center order-1 lg:order-2 w-full"
             >
               <div className="relative">
                 <div className="w-80 h-80 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full p-4">
@@ -577,7 +598,7 @@ const BestReviewsSlider: React.FC = () => {
   const next = () => setCurrent((prev) => (prev + 1) % reviews.length);
   const prev = () => setCurrent((prev) => (prev - 1 + reviews.length) % reviews.length);
 
-  if (loading) return <div className="py-8 text-lg text-gray-400">Loading reviews...</div>;
+  if (loading) return <div className="py-8 flex justify-center"><Loader size={40} /></div>;
   if (error || reviews.length === 0) return <div className="py-8 text-lg text-gray-400">No reviews yet.</div>;
 
   const review = reviews[current];

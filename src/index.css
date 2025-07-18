@@ -3,6 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-white;
+}
+html.dark body {
+  @apply bg-gray-950;
+}
+
 .code-block, .react-syntax-highlighter {
   font-family: 'Fira Mono', Menlo, Consolas, monospace !important;
 }

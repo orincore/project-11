@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Eye, ArrowLeft, Github, Globe, User, Lock, LogOut, Sun, Moon, Plus, Folder, Film, MessageCircle, Star, Calendar, Edit, Trash2, Check, X, Mail } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import Loader from '../components/Loader';
 
 const TABS = [
   { name: 'Dashboard', icon: <Folder className="w-4 h-4 mr-2" /> },
@@ -790,7 +791,7 @@ const AdminPanel: React.FC = () => {
                           onChange={e => handleImageUpload(e.target.files)}
                         />
                         <span className="text-sm text-gray-500">Drag & drop or click to upload images</span>
-                        {uploading && <div className="mt-2 text-purple-600 animate-pulse">Uploading...</div>}
+                        {uploading ? <div className="mt-2 text-purple-600 animate-pulse">Uploading...</div> : null}
                         {uploadError && <div className="mt-2 text-red-500">{uploadError}</div>}
                       </div>
                       {/* Preview uploaded images */}
@@ -841,7 +842,7 @@ const AdminPanel: React.FC = () => {
                 </div>
                     <div className="flex justify-end gap-2 mt-4">
                       <button type="button" onClick={closeProjectEdit} className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-800 transition flex items-center"><X className="w-4 h-4 mr-1" />Cancel</button>
-                      <button type="submit" className="px-4 py-2 rounded bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:shadow flex items-center" disabled={editProjectLoading}>{editProjectLoading ? <span className="animate-spin h-4 w-4 mr-2 border-b-2 border-white rounded-full"></span> : <Check className="w-4 h-4 mr-1" />}Save</button>
+                      <button type="submit" className="px-4 py-2 rounded bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:shadow flex items-center" disabled={editProjectLoading}>{editProjectLoading ? <Loader size={20} /> : <Check className="w-4 h-4 mr-1" />}Save</button>
                     </div>
                   </form>
                 </div>
@@ -855,7 +856,7 @@ const AdminPanel: React.FC = () => {
                   <p className="mb-6">Are you sure you want to delete this project? This action cannot be undone.</p>
                   <div className="flex justify-end gap-2">
                     <button onClick={cancelProjectDelete} className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-800 transition flex items-center"><X className="w-4 h-4 mr-1" />Cancel</button>
-                    <button onClick={doProjectDelete} className="px-4 py-2 rounded bg-red-500 text-white font-semibold hover:bg-red-600 flex items-center" disabled={deleteProjectLoading}>{deleteProjectLoading ? <span className="animate-spin h-4 w-4 mr-2 border-b-2 border-white rounded-full"></span> : <Trash2 className="w-4 h-4 mr-1" />}Delete</button>
+                    <button onClick={doProjectDelete} className="px-4 py-2 rounded bg-red-500 text-white font-semibold hover:bg-red-600 flex items-center" disabled={deleteProjectLoading}>{deleteProjectLoading ? <Loader size={20} /> : <Trash2 className="w-4 h-4 mr-1" />}Delete</button>
                   </div>
                 </div>
               </div>
@@ -968,7 +969,7 @@ const AdminPanel: React.FC = () => {
                     </div>
                     <div className="flex justify-end gap-2 mt-4">
                       <button type="button" onClick={closeEdit} className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-800 transition flex items-center"><X className="w-4 h-4 mr-1" />Cancel</button>
-                      <button type="submit" className="px-4 py-2 rounded bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:shadow flex items-center" disabled={editLoading}>{editLoading ? <span className="animate-spin h-4 w-4 mr-2 border-b-2 border-white rounded-full"></span> : <Check className="w-4 h-4 mr-1" />}Save</button>
+                      <button type="submit" className="px-4 py-2 rounded bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:shadow flex items-center" disabled={editLoading}>{editLoading ? <Loader size={20} /> : <Check className="w-4 h-4 mr-1" />}Save</button>
                     </div>
                   </form>
                 </div>
@@ -982,7 +983,7 @@ const AdminPanel: React.FC = () => {
                   <p className="mb-6">Are you sure you want to delete this review? This action cannot be undone.</p>
                   <div className="flex justify-end gap-2">
                     <button onClick={cancelDelete} className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-800 transition flex items-center"><X className="w-4 h-4 mr-1" />Cancel</button>
-                    <button onClick={doDelete} className="px-4 py-2 rounded bg-red-500 text-white font-semibold hover:bg-red-600 flex items-center" disabled={deleteLoading}>{deleteLoading ? <span className="animate-spin h-4 w-4 mr-2 border-b-2 border-white rounded-full"></span> : <Trash2 className="w-4 h-4 mr-1" />}Delete</button>
+                    <button onClick={doDelete} className="px-4 py-2 rounded bg-red-500 text-white font-semibold hover:bg-red-600 flex items-center" disabled={deleteLoading}>{deleteLoading ? <Loader size={20} /> : <Trash2 className="w-4 h-4 mr-1" />}Delete</button>
                   </div>
                 </div>
               </div>

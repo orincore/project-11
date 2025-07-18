@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, Clock, CheckCircle } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { Helmet } from 'react-helmet-async';
 
 const Contact: React.FC = () => {
   const { isDarkMode } = useTheme();
@@ -159,7 +160,42 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen pt-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <>
+      <Helmet>
+        <title>Contact Orincore | Start Your Project or Get a Free Consultation</title>
+        <meta name="description" content="Contact Orincore Technologies for web, mobile, AI, or IoT projects. Get a free consultation and discover how we can help your business grow!" />
+        <meta name="keywords" content="Orincore, contact, web development, free consultation, hire developer, business growth, project inquiry" />
+        <meta property="og:title" content="Contact Orincore | Start Your Project or Get a Free Consultation" />
+        <meta property="og:description" content="Contact Orincore Technologies for web, mobile, AI, or IoT projects. Get a free consultation and discover how we can help your business grow!" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://orincore.com/contact" />
+        <meta property="og:image" content="https://orincore.com/assets/logo/OClogo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact Orincore | Start Your Project or Get a Free Consultation" />
+        <meta name="twitter:description" content="Contact Orincore Technologies for web, mobile, AI, or IoT projects. Get a free consultation and discover how we can help your business grow!" />
+        <meta name="twitter:image" content="https://orincore.com/assets/logo/OClogo.png" />
+        <link rel="canonical" href="https://orincore.com/contact" />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact Orincore",
+            "url": "https://orincore.com/contact",
+            "description": "Contact Orincore Technologies for web, mobile, AI, or IoT projects. Get a free consultation and discover how we can help your business grow!",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Orincore Technologies",
+              "url": "https://orincore.com/"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "contact@orincore.com",
+              "telephone": "+91 8830948511",
+              "contactType": "customer support"
+            }
+          }
+        `}</script>
+      </Helmet>
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto text-center">
@@ -174,9 +210,20 @@ const Contact: React.FC = () => {
               </span>
             </h1>
             <p className={`text-xl mb-8 max-w-3xl mx-auto ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Ready to start your next project? Let's discuss how we can help bring your ideas to life 
-              with innovative web solutions.
+              Contact Orincore, your trusted web development and AI partner in Mumbai, for a free consultation or project proposal. Ready to start your next project? Let's discuss how we can help bring your ideas to life with innovative web solutions.
             </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+              <a href="#contact-form">
+                <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2">
+                  Book a Free Consultation
+                </button>
+              </a>
+              <a href="#contact-form">
+                <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 flex items-center space-x-2">
+                  Send Your Project Inquiry
+                </button>
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -210,7 +257,7 @@ const Contact: React.FC = () => {
                 </motion.div>
               )}
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label 
@@ -491,7 +538,7 @@ const Contact: React.FC = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

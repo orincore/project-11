@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Award, Users, Target, Zap, Calendar, MapPin, Mail, Phone } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import adarshImg from '../assets/images/adarsh.jpg';
+import { Helmet } from 'react-helmet-async';
 
 const About: React.FC = () => {
   const { isDarkMode } = useTheme();
@@ -89,7 +90,41 @@ const About: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen pt-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <>
+      <Helmet>
+        <title>About Orincore | Adarsh Suradkar, CEO & Tech Visionary</title>
+        <meta name="description" content="Learn about Orincore Technologies, founded by Adarsh Suradkar. Discover our journey, values, and expertise in web, AI, IoT, and mobile development." />
+        <meta name="keywords" content="Orincore, About, Adarsh Suradkar, CEO, web development, AI, IoT, mobile apps, company values, tech journey" />
+        <meta property="og:title" content="About Orincore | Adarsh Suradkar, CEO & Tech Visionary" />
+        <meta property="og:description" content="Learn about Orincore Technologies, our founder Adarsh Suradkar, and our journey in web, AI, and IoT innovation." />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://orincore.com/about" />
+        <meta property="og:image" content="https://orincore.com/assets/images/adarsh.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Orincore | Adarsh Suradkar, CEO & Tech Visionary" />
+        <meta name="twitter:description" content="Learn about Orincore Technologies, our founder Adarsh Suradkar, and our journey in web, AI, and IoT innovation." />
+        <meta name="twitter:image" content="https://orincore.com/assets/images/adarsh.jpg" />
+        <link rel="canonical" href="https://orincore.com/about" />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Adarsh Suradkar",
+            "url": "https://orincore.com/about",
+            "image": "https://orincore.com/assets/images/adarsh.jpg",
+            "jobTitle": "Founder & CEO",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "Orincore Technologies",
+              "url": "https://orincore.com/"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/in/adarshsuradkar",
+              "https://twitter.com/orincore"
+            ]
+          }
+        `}</script>
+      </Helmet>
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -110,6 +145,22 @@ const About: React.FC = () => {
               The founder, Adarsh Suradkar, is currently pursuing his Bachelor of Computer Applications (BCA) and has already completed projects in machine learning, cloud computing, and generative AI. His strong command of technologies like Python, Scikit-learn, EDA tools, and AWS allows him to build data-driven models such as a loan approval classifier while also preparing for advanced GenAI applications. With a solid foundation in both development and AI, Orincore Technologies aims to become a brand known for delivering smart, scalable, and visually polished solutions. The company continues to expand its portfolio with purpose-driven products, merging creativity with engineering to solve real-world problems across domains.
             </p>
           </motion.div>
+          {/* CTA Section */}
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/portfolio">
+              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2">
+                See Our Portfolio
+              </button>
+            </a>
+            <a href="/contact">
+              <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 flex items-center space-x-2">
+                Contact the Founder
+              </button>
+            </a>
+          </div>
+          <div className="mt-6 text-center text-lg text-purple-700 font-semibold">
+            Learn about Orincore Technologies, an innovative IT company in Mumbai led by Adarsh Suradkar, specializing in web, mobile, and AI solutions.
+          </div>
         </div>
       </section>
 
@@ -272,7 +323,7 @@ const About: React.FC = () => {
           </motion.div>
 
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-purple-600 to-indigo-600 h-full rounded-full" />
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-purple-600 to-indigo-600 h-full rounded-full" />
             
             <div className="space-y-12">
               {timeline.map((item, index) => (
@@ -282,29 +333,27 @@ const About: React.FC = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
-                  className={`flex items-center ${
-                    index % 2 === 0 ? 'justify-start' : 'justify-end'
-                  }`}
+                  className={`flex flex-col md:flex-row items-center ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}
                 >
-                  <div className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
-                    <div className={`p-6 rounded-xl ${
-                      isDarkMode 
-                        ? 'bg-gray-800 hover:bg-gray-700' 
-                        : 'bg-white hover:bg-gray-50'
-                    } shadow-lg hover:shadow-xl transition-all duration-300`}>
-                      <div className="text-2xl font-bold text-purple-600 mb-2">
-                        {item.date}
+                  <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'}`}> 
+                      <div className={`p-6 rounded-xl ${
+                        isDarkMode 
+                          ? 'bg-gray-800 hover:bg-gray-700' 
+                          : 'bg-white hover:bg-gray-50'
+                      } shadow-lg hover:shadow-xl transition-all duration-300`}>
+                        <div className="text-2xl font-bold text-purple-600 mb-2">
+                          {item.date}
+                        </div>
+                        <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                          {item.title}
+                        </h3>
+                        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {item.description}
+                        </p>
                       </div>
-                      <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                        {item.title}
-                      </h3>
-                      <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                        {item.description}
-                      </p>
                     </div>
-                  </div>
-                  
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full border-4 border-white" />
+                  {/* Timeline dot for desktop only */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full border-4 border-white" />
                 </motion.div>
               ))}
             </div>
@@ -350,7 +399,7 @@ const About: React.FC = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 
