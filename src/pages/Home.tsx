@@ -117,17 +117,17 @@ const Home: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="space-y-4"
             >
-              <p className="text-xl sm:text-2xl text-purple-200 max-w-3xl mx-auto">
+              <p className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x max-w-3xl mx-auto">
                 Orincore is a leading web development and AI solutions company in Mumbai. Hire a React developer or AI expert for your next project. Building the future of web development.
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-lg text-purple-300">
+              <div className="flex flex-wrap justify-center gap-4 text-lg font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
                 {['Innovative Solutions', 'Quality Development', 'Client Success'].map((phrase, index) => (
                   <motion.span
                     key={phrase}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 + index * 0.2 }}
-                    className="bg-purple-800/30 px-4 py-2 rounded-full backdrop-blur-sm"
+                    className="px-4 py-2 rounded-full backdrop-blur-sm"
                   >
                     {phrase}
                   </motion.span>
@@ -148,15 +148,6 @@ const Home: React.FC = () => {
                   className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2"
                 >
                   <span>Start Your Project Today</span>
-                </motion.button>
-              </Link>
-              <Link to="/contact">
-                <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 flex items-center space-x-2"
-                >
-                  <span>Get a Free Consultation</span>
                 </motion.button>
               </Link>
               <Link to="/portfolio">
@@ -208,7 +199,7 @@ const Home: React.FC = () => {
                 style={{ maxWidth: '220px' }}
               />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
               Recognised by ICICI Lombard
             </h2>
             <p className={`text-lg max-w-xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>
@@ -365,8 +356,10 @@ const Home: React.FC = () => {
                     : 'bg-white hover:bg-gray-50'
                 } shadow-lg hover:shadow-xl transition-all duration-300`}
               >
-                <div className="text-purple-600 mb-4 flex justify-center">
-                  {feature.icon}
+                <div className="mb-4 flex justify-center">
+                  <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
+                    {feature.icon}
+                  </span>
                 </div>
                 <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                   {feature.title}
@@ -417,7 +410,7 @@ const Home: React.FC = () => {
                   <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     Orincore Studio
                   </h3>
-                  <p className="text-purple-600 font-medium">studio.orincore.com</p>
+                  <p className="font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">studio.orincore.com</p>
                 </div>
               </div>
               <p className={`text-lg mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -428,7 +421,7 @@ const Home: React.FC = () => {
                 {['AI Generation', 'Custom Styles', 'High Quality', 'Fast Delivery'].map((feature) => (
                   <span
                     key={feature}
-                    className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x px-3 py-1 rounded-full text-sm font-medium"
                   >
                     {feature}
                   </span>
@@ -465,7 +458,7 @@ const Home: React.FC = () => {
                   <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     Orincore Circle
                   </h3>
-                  <p className="text-blue-600 font-medium">circle.orincore.com</p>
+                  <p className="font-medium bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">circle.orincore.com</p>
                 </div>
               </div>
               <p className={`text-lg mb-6 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -476,7 +469,7 @@ const Home: React.FC = () => {
                 {['Interest Matching', 'Real Connections', 'Safe Community', 'Interactive Features'].map((feature) => (
                   <span
                     key={feature}
-                    className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x px-3 py-1 rounded-full text-sm font-medium"
                   >
                     {feature}
                   </span>
@@ -515,7 +508,7 @@ const Home: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Ready to Build Something Amazing?
             </h2>
-            <p className="text-lg mb-8 text-purple-200">
+            <p className="text-lg mb-8 font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
               Let's discuss your project and turn your ideas into reality
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -541,6 +534,19 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </section>
+      {/* Gradient animation keyframes (add to global styles if not present) */}
+      <style>
+        {`
+          @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 4s ease-in-out infinite;
+          }
+        `}
+      </style>
     </>
   );
 };

@@ -205,19 +205,12 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className={`text-5xl sm:text-6xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Get In <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                Touch
-              </span>
+              Get In <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">Touch</span>
             </h1>
             <p className={`text-xl mb-8 max-w-3xl mx-auto ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               Contact Orincore, your trusted web development and AI partner in Mumbai, for a free consultation or project proposal. Ready to start your next project? Let's discuss how we can help bring your ideas to life with innovative web solutions.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <a href="#contact-form">
-                <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2">
-                  Book a Free Consultation
-                </button>
-              </a>
+            <div className="flex flex-col items-center sm:flex-row justify-center gap-4 mb-8">
               <a href="#contact-form">
                 <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 flex items-center space-x-2">
                   Send Your Project Inquiry
@@ -227,6 +220,20 @@ const Contact: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Gradient animation keyframes (add to global styles if not present) */}
+      <style>
+        {`
+          @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 4s ease-in-out infinite;
+          }
+        `}
+      </style>
 
       {/* Contact Form and Info */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">

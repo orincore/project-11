@@ -451,25 +451,12 @@ const AnimationGuide: React.FC = () => {
               transition={{ duration: 0.8 }}
             >
               <h1 className={`text-5xl sm:text-6xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                Animation <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                  Guide
-                </span>
+                Animation <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">Guide</span>
               </h1>
               <p className={`text-xl mb-8 max-w-3xl mx-auto ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 Want stunning UI/UX animations for your website? Orincore is your framer motion expert in India. Explore our animation guide for React and Framer Motion.
               </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                <a href="/contact">
-                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2">
-                    Hire Us for UI/UX Animation
-                  </button>
-                </a>
-                <a href="/portfolio">
-                  <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 flex items-center space-x-2">
-                    See Our UI/UX Work
-                  </button>
-                </a>
-              </div>
+              {/* Removed 'Hire Us for UI/UX Animation' and 'See Our UI/UX Work' buttons as requested */}
             </motion.div>
           </div>
         </section>
@@ -505,9 +492,8 @@ const AnimationGuide: React.FC = () => {
                   <span className={`font-mono ${isDarkMode ? 'text-white' : 'text-black'}`}>npm install framer-motion</span>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
                     onClick={() => copyToClipboard('npm install framer-motion', 'install')}
-                    className="ml-4 p-2 rounded bg-white/20 hover:bg-white/30 transition-colors"
+                    className={`ml-4 p-2 rounded transition-colors ${isDarkMode ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-black/10 hover:bg-black/20 text-black'}`}
                   >
                     {copiedCode === 'install' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   </motion.button>
@@ -526,9 +512,8 @@ const AnimationGuide: React.FC = () => {
                   <span className={`font-mono ${isDarkMode ? 'text-white' : 'text-black'}`}>import &#123; motion, AnimatePresence &#125; from 'framer-motion';</span>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
                     onClick={() => copyToClipboard("import { motion, AnimatePresence } from 'framer-motion';", 'import')}
-                    className="ml-4 p-2 rounded bg-white/20 hover:bg-white/30 transition-colors"
+                    className={`ml-4 p-2 rounded transition-colors ${isDarkMode ? 'bg-white/20 hover:bg-white/30 text-white' : 'bg-black/10 hover:bg-black/20 text-black'}`}
                   >
                     {copiedCode === 'import' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   </motion.button>
@@ -614,7 +599,7 @@ const AnimationGuide: React.FC = () => {
                               ? 'bg-green-100 text-green-700'
                               : isDarkMode
                               ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                              : 'bg-black/10 text-black hover:bg-black/20'
                           }`}
                         >
                           {copiedCode === animation.id ? (
@@ -742,6 +727,19 @@ const AnimationGuide: React.FC = () => {
           </div>
         </section>
       </div>
+      {/* Gradient animation keyframes (add to global styles if not present) */}
+      <style>
+        {`
+          @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 4s ease-in-out infinite;
+          }
+        `}
+      </style>
     </>
   );
 };

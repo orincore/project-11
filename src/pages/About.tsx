@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Award, Users, Target, Zap, Calendar, MapPin, Mail, Phone } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -89,6 +89,13 @@ const About: React.FC = () => {
     },
   ];
 
+  const [hasMounted, setHasMounted] = useState(false);
+  const device = useDeviceType();
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -135,18 +142,17 @@ const About: React.FC = () => {
             className="text-center mb-16"
           >
             <h1 className={`text-5xl sm:text-6xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              About <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                Orincore
-              </span>
+              About <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">Orincore</span>
             </h1>
-            <p className={`text-xl leading-relaxed max-w-3xl mx-auto ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Orincore Technologies is an emerging IT and AI-focused venture founded by Adarsh Suradkar, an ambitious engineer and tech enthusiast with a vision to build intelligent, user-centric digital products. Rooted in innovation and driven by practical applications, the company offers a diverse range of services including web development, mobile app creation, AI/ML solutions, and IoT automation. The company has developed and deployed several full-stack projects using modern technologies like Vite, ReactJS, Tailwind CSS, Node.js, and MongoDB, combined with backend platforms such as Supabase and Cloudinary. Orincore’s expertise extends to cross-platform mobile apps built with Flutter and React Native, which are integrated with features like Google AdMob, real-time notifications, and advanced state management.<br/><br/>
-              One of the company’s most notable projects is "Circle" – a multi-platform social matchmaking app designed for web, mobile, macOS, and Windows that includes real-time chat, intelligent matchmaking, profile discovery, and moderation tools. Another flagship product is "Manish Photography," a client-centric platform for uploading, sharing, and managing wedding and event photographs, equipped with secure login systems, image optimization, and PWA support. Orincore has also engineered IoT-based smart switch systems using ESP32, Sinric Pro, and Google Home, enabling both cloud and physical control of home appliances with synchronized state updates.<br/><br/>
-              The founder, Adarsh Suradkar, is currently pursuing his Bachelor of Computer Applications (BCA) and has already completed projects in machine learning, cloud computing, and generative AI. His strong command of technologies like Python, Scikit-learn, EDA tools, and AWS allows him to build data-driven models such as a loan approval classifier while also preparing for advanced GenAI applications. With a solid foundation in both development and AI, Orincore Technologies aims to become a brand known for delivering smart, scalable, and visually polished solutions. The company continues to expand its portfolio with purpose-driven products, merging creativity with engineering to solve real-world problems across domains.
-            </p>
+            <div className="relative max-w-3xl mx-auto mt-8 mb-12">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 opacity-80" />
+              {/* Mobile/Desktop version (device detection) */}
+              {hasMounted && device === 'mobile' && <WhoWeAreMobile isDarkMode={isDarkMode} />}
+              {hasMounted && device === 'desktop' && <WhoWeAreDesktop isDarkMode={isDarkMode} />}
+            </div>
           </motion.div>
           {/* CTA Section */}
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+          <div className="mt-8 flex flex-col items-center sm:flex-row justify-center gap-4">
             <a href="/portfolio">
               <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2">
                 See Our Portfolio
@@ -158,7 +164,7 @@ const About: React.FC = () => {
               </button>
             </a>
           </div>
-          <div className="mt-6 text-center text-lg text-purple-700 font-semibold">
+          <div className="mt-6 text-center text-lg font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
             Learn about Orincore Technologies, an innovative IT company in Mumbai led by Adarsh Suradkar, specializing in web, mobile, and AI solutions.
           </div>
         </div>
@@ -173,13 +179,13 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="space-y-6"
+              className="space-y-6 order-2 w-full lg:order-1"
             >
               <div className="space-y-2">
                 <h2 className={`text-4xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                   Meet Our CEO
                 </h2>
-                <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
                   Adarsh Suradkar
                 </h3>
               </div>
@@ -223,7 +229,7 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center"
+              className="flex justify-center order-1 w-full mb-8 lg:mb-0 lg:order-2"
             >
               <div className="relative">
                 <motion.div
@@ -341,7 +347,7 @@ const About: React.FC = () => {
                           ? 'bg-gray-800 hover:bg-gray-700' 
                           : 'bg-white hover:bg-gray-50'
                       } shadow-lg hover:shadow-xl transition-all duration-300`}>
-                        <div className="text-2xl font-bold text-purple-600 mb-2">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x mb-2">
                           {item.date}
                         </div>
                         <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -399,8 +405,110 @@ const About: React.FC = () => {
           </motion.div>
         </div>
       </section>
+      {/* Gradient animation keyframes (add to global styles if not present) */}
+      <style>
+        {`
+          @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 4s ease-in-out infinite;
+          }
+        `}
+      </style>
     </>
   );
 };
+
+// WhoWeAreMobile component
+const WhoWeAreMobile: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => (
+  <div className={`rounded-2xl shadow-xl border ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-purple-200'} px-4 py-8 text-gray-600 dark:text-gray-300 flex flex-col items-center overflow-x-auto snap-x`} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+    <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x text-center">Who We Are</h2>
+    <div className="space-y-6 text-base leading-relaxed text-center">
+      <p>
+        Orincore Technologies is an emerging IT and AI-focused venture founded by Adarsh Suradkar, an ambitious engineer and tech enthusiast with a vision to build intelligent, user-centric digital products.
+      </p>
+      <p>
+        Rooted in innovation and driven by practical applications, the company offers a diverse range of services including web development, mobile app creation, AI/ML solutions, and IoT automation. The company has developed and deployed several full-stack projects using modern technologies like Vite, ReactJS, Tailwind CSS, Node.js, and MongoDB, combined with backend platforms such as Supabase and Cloudinary.
+      </p>
+      <p>
+        Orincore’s expertise extends to cross-platform mobile apps built with Flutter and React Native, which are integrated with features like Google AdMob, real-time notifications, and advanced state management.
+      </p>
+      <p>
+        <b>Circle</b> is a multi-platform social matchmaking app designed for web, mobile, macOS, and Windows that includes real-time chat, intelligent matchmaking, profile discovery, and moderation tools.
+      </p>
+      <p>
+        <b>Manish Photography</b> is a client-centric platform for uploading, sharing, and managing wedding and event photographs, equipped with secure login systems, image optimization, and PWA support.
+      </p>
+      <p>
+        Orincore has also engineered IoT-based smart switch systems using ESP32, Sinric Pro, and Google Home, enabling both cloud and physical control of home appliances with synchronized state updates.
+      </p>
+      <p>
+        The founder, Adarsh Suradkar, is currently pursuing his Bachelor of Computer Applications (BCA) and has already completed projects in machine learning, cloud computing, and generative AI. His strong command of technologies like Python, Scikit-learn, EDA tools, and AWS allows him to build data-driven models such as a loan approval classifier while also preparing for advanced GenAI applications.
+      </p>
+      <p>
+        With a solid foundation in both development and AI, Orincore Technologies aims to become a brand known for delivering smart, scalable, and visually polished solutions. The company continues to expand its portfolio with purpose-driven products, merging creativity with engineering to solve real-world problems across domains.
+      </p>
+    </div>
+  </div>
+);
+
+// WhoWeAreDesktop component
+const WhoWeAreDesktop: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => (
+  <div className={`max-w-3xl mx-auto mt-12 mb-12 rounded-2xl shadow-xl border ${isDarkMode ? 'bg-white/5 border-purple-200/20' : 'bg-white border-purple-200'} px-10 py-12 text-gray-700 dark:text-gray-300 flex flex-col items-center`}>
+    <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x text-center">Who We Are</h2>
+    <div className="w-24 h-1 rounded-full mx-auto mb-8 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 opacity-80" />
+    <div className="space-y-6 text-base leading-relaxed text-center">
+      <p>
+        Orincore Technologies is an emerging IT and AI-focused venture founded by Adarsh Suradkar, an ambitious engineer and tech enthusiast with a vision to build intelligent, user-centric digital products.
+      </p>
+      <p>
+        Rooted in innovation and driven by practical applications, the company offers a diverse range of services including web development, mobile app creation, AI/ML solutions, and IoT automation. The company has developed and deployed several full-stack projects using modern technologies like Vite, ReactJS, Tailwind CSS, Node.js, and MongoDB, combined with backend platforms such as Supabase and Cloudinary.
+      </p>
+      <p>
+        Orincore’s expertise extends to cross-platform mobile apps built with Flutter and React Native, which are integrated with features like Google AdMob, real-time notifications, and advanced state management.
+      </p>
+      <p>
+        <b>Circle</b> is a multi-platform social matchmaking app designed for web, mobile, macOS, and Windows that includes real-time chat, intelligent matchmaking, profile discovery, and moderation tools.
+      </p>
+      <p>
+        <b>Manish Photography</b> is a client-centric platform for uploading, sharing, and managing wedding and event photographs, equipped with secure login systems, image optimization, and PWA support.
+      </p>
+      <p>
+        Orincore has also engineered IoT-based smart switch systems using ESP32, Sinric Pro, and Google Home, enabling both cloud and physical control of home appliances with synchronized state updates.
+      </p>
+      <p>
+        The founder, Adarsh Suradkar, is currently pursuing his Bachelor of Computer Applications (BCA) and has already completed projects in machine learning, cloud computing, and generative AI. His strong command of technologies like Python, Scikit-learn, EDA tools, and AWS allows him to build data-driven models such as a loan approval classifier while also preparing for advanced GenAI applications.
+      </p>
+      <p>
+        With a solid foundation in both development and AI, Orincore Technologies aims to become a brand known for delivering smart, scalable, and visually polished solutions. The company continues to expand its portfolio with purpose-driven products, merging creativity with engineering to solve real-world problems across domains.
+      </p>
+    </div>
+  </div>
+);
+
+// Device type detection hook
+function useDeviceType() {
+  const [device, setDevice] = React.useState<string | null>(null);
+  React.useEffect(() => {
+    function detect() {
+      if (typeof window === 'undefined') return;
+      const ua = navigator.userAgent;
+      if (/Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(ua)) {
+        setDevice('mobile');
+      } else if (window.innerWidth < 640) {
+        setDevice('mobile');
+      } else {
+        setDevice('desktop');
+      }
+    }
+    detect();
+    window.addEventListener('resize', detect);
+    return () => window.removeEventListener('resize', detect);
+  }, []);
+  return device;
+}
 
 export default About;

@@ -216,7 +216,7 @@ const Reviews: React.FC = () => {
               <p className={`text-xl mb-8 max-w-3xl mx-auto ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                 See why clients rate Orincore as the best web development company in Mumbai. Read real client reviews and testimonials for Orincore Technologies.
               </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+              <div className="flex flex-col items-center sm:flex-row justify-center gap-4 mb-8">
                 <a href="/contact">
                   <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2">
                     Start Your Project with Us
@@ -400,7 +400,7 @@ const Reviews: React.FC = () => {
                     className={`px-8 py-3 rounded-lg font-semibold text-white transition-all duration-300 flex items-center space-x-2 mx-auto ${
                       isSubmitting || rating === 0
                         ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg'
+                        : 'bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 animate-gradient-x-slow hover:from-purple-700 hover:to-indigo-700'
                     }`}
                   >
                     {isSubmitting ? (
@@ -489,6 +489,19 @@ const Reviews: React.FC = () => {
           </div>
         </section>
       </div>
+      {/* Gradient animation keyframes (add to global styles if not present) */}
+      <style>
+        {`
+          @keyframes gradient-x-slow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          .animate-gradient-x-slow {
+            background-size: 200% 200%;
+            animation: gradient-x-slow 12s ease-in-out infinite;
+          }
+        `}
+      </style>
     </>
   );
 };

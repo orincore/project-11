@@ -126,9 +126,22 @@ const Portfolio: React.FC = () => {
       <div className="w-full min-h-screen pt-16 bg-white dark:bg-gray-950">
         <div className="w-full max-w-[1800px] mx-auto py-20 px-2 sm:px-4 lg:px-8">
           <h1 className={`text-4xl font-bold mb-8 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Portfolio Projects</h1>
-          <div className="mb-6 text-center text-lg text-purple-700 font-semibold">
+          <div className="mb-6 text-center text-base sm:text-lg font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
             Explore our portfolio of web, mobile, and AI projects delivered for clients across India. Custom web app development, AI solutions, and more.
           </div>
+          {/* Gradient animation keyframes (add to global styles if not present) */}
+          <style>
+            {`
+              @keyframes gradient-x {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+              }
+              .animate-gradient-x {
+                background-size: 200% 200%;
+                animation: gradient-x 4s ease-in-out infinite;
+              }
+            `}
+          </style>
           <div className="mb-8 flex flex-col gap-4">
             {/* Search Bar */}
             <div className="relative w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto flex justify-center">
@@ -226,7 +239,7 @@ const Portfolio: React.FC = () => {
                             href={project.repo_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-700 transition text-xs font-semibold shadow"
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x hover:bg-gray-700 transition text-xs font-semibold shadow"
                             title="View Repo"
                           >
                             <Github className="w-4 h-4 mr-1" /> Repo
@@ -237,7 +250,7 @@ const Portfolio: React.FC = () => {
                             href={project.live_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 transition text-xs font-semibold shadow"
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x hover:from-purple-700 hover:to-indigo-700 transition text-xs font-semibold shadow"
                             title="View Live"
                           >
                             <Globe className="w-4 h-4 mr-1" /> Live
@@ -245,7 +258,7 @@ const Portfolio: React.FC = () => {
                         )}
                         <button
                           onClick={() => navigate(`/portfolio/${project.id}`)}
-                          className="flex items-center gap-1 px-3 py-2 rounded-full bg-white text-purple-700 border border-purple-200 hover:bg-purple-50 transition text-xs font-semibold shadow"
+                          className="flex items-center gap-1 px-3 py-2 rounded-full bg-white border border-purple-200 hover:bg-purple-50 transition text-xs font-semibold shadow bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x"
                           title="More Details"
                         >
                           <Eye className="w-4 h-4 mr-1" /> More Details
