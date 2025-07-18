@@ -390,15 +390,15 @@ const About: React.FC = () => {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
-                <div className="text-3xl font-bold text-purple-200 mb-2">100+</div>
+                <div className="text-3xl font-bold text-purple-200 mb-2">45+</div>
                 <div className="text-sm">Projects Delivered</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-purple-200 mb-2">50+</div>
+                <div className="text-3xl font-bold text-purple-200 mb-2">5+</div>
                 <div className="text-sm">Happy Clients</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-purple-200 mb-2">5+</div>
+                <div className="text-3xl font-bold text-purple-200 mb-2">2+</div>
                 <div className="text-sm">Years Experience</div>
               </div>
             </div>
