@@ -139,7 +139,7 @@ const Home: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="pt-8 flex flex-col sm:flex-row justify-center gap-4"
+              className="pt-8 flex flex-col items-center sm:flex-row justify-center gap-4"
             >
               <Link to="/contact">
                 <motion.button
@@ -221,30 +221,7 @@ const Home: React.FC = () => {
       {/* Best Reviews Slider Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className={`rounded-2xl shadow-xl px-8 sm:px-16 py-14 flex flex-col items-center text-center border w-full max-w-5xl mx-auto ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-purple-200'}`}
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              What Our Clients Say
-            </h2>
-            <div className={isDarkMode ? 'py-8 text-lg text-gray-300' : 'py-8 text-lg text-black'}>
-              No reviews yet.
-            </div>
-            <Link to="/reviews" className="mt-8 inline-block">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2"
-              >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                <span>Submit Your Review</span>
-              </motion.button>
-            </Link>
-          </motion.div>
+          <BestReviewsSlider />
         </div>
       </section>
 
@@ -344,9 +321,9 @@ const Home: React.FC = () => {
                 whileHover={{ y: -5, scale: 1.05 }}
                 className={`p-4 rounded-lg text-center ${
                   isDarkMode 
-                    ? 'bg-gray-800 hover:bg-gray-700 text-white' 
-                    : 'bg-white hover:bg-gray-50 text-gray-900'
-                } shadow-lg hover:shadow-xl transition-all duration-300`}
+                    ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 border border-purple-700 hover:border-purple-500 text-white' 
+                    : 'bg-gradient-to-br from-white via-purple-50 to-white border border-purple-300 hover:border-purple-500 text-gray-900'
+                } shadow-lg hover:shadow-xl transition-all duration-300 font-semibold`}
               >
                 <div className="text-sm font-medium">{tech}</div>
               </motion.div>
@@ -572,21 +549,20 @@ export default Home;
 
 const BestReviewsSlider: React.FC = () => {
   const { isDarkMode } = useTheme();
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [current, setCurrent] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [reviews, setReviews] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState('');
+  const [current, setCurrent] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_BASE_URL}/reviews`)
       .then(res => res.json())
       .then(data => {
-        // Sort by rating desc, then by date desc
         const sorted = data
           .filter((r: any) => r.rating >= 4)
           .sort((a: any, b: any) => b.rating - a.rating || new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        setReviews(sorted.slice(0, 8)); // Show up to 8 best reviews
+        setReviews(sorted.slice(0, 8));
         setLoading(false);
       })
       .catch(() => {
@@ -595,47 +571,85 @@ const BestReviewsSlider: React.FC = () => {
       });
   }, []);
 
+  // Auto-slide to a random review every 6 seconds
+  React.useEffect(() => {
+    if (reviews.length <= 1) return;
+    const interval = setInterval(() => {
+      let next;
+      do {
+        next = Math.floor(Math.random() * reviews.length);
+      } while (next === current && reviews.length > 1);
+      setCurrent(next);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [reviews, current]);
+
   const next = () => setCurrent((prev) => (prev + 1) % reviews.length);
   const prev = () => setCurrent((prev) => (prev - 1 + reviews.length) % reviews.length);
 
   if (loading) return <div className="py-8 flex justify-center"><Loader size={40} /></div>;
-  if (error || reviews.length === 0) return <div className="py-8 text-lg text-gray-400">No reviews yet.</div>;
+  if (error || reviews.length === 0) return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className={`rounded-2xl shadow-xl px-8 sm:px-16 py-14 flex flex-col items-center text-center border w-full max-w-5xl mx-auto ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-purple-200'}`}
+    >
+      <h2 className="text-2xl sm:text-3xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+        What Our Clients Say
+      </h2>
+      <div className={isDarkMode ? 'py-8 text-lg text-gray-300' : 'py-8 text-lg text-black'}>
+        No reviews yet.
+      </div>
+      <Link to="/reviews" className="mt-8 inline-block">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-lg hover:shadow-purple-500/25 transition-all duration-300 flex items-center space-x-2"
+        >
+          <MessageCircle className="w-5 h-5 mr-2" />
+          <span>Submit Your Review</span>
+        </motion.button>
+      </Link>
+    </motion.div>
+  );
 
   const review = reviews[current];
   return (
-    <motion.div
-      key={review.id}
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      transition={{ duration: 0.5 }}
-      className={`w-full flex flex-col items-center max-w-4xl mx-auto`}
-    >
-      <div className="flex items-center mb-4">
-        <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mr-4">
-          {review.name ? review.name.split(' ').map((n: string) => n[0]).join('') : ''}
-        </div>
-        <div className="text-left">
-          <h3 className={`font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{review.name}</h3>
-          <div className="flex items-center space-x-1 mt-1">
-            {Array.from({ length: 5 }, (_, i) => (
-              <Star key={i} className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'} fill-current`} />
-            ))}
+    <div className={`w-full flex flex-col items-center max-w-4xl mx-auto rounded-2xl shadow-xl px-8 sm:px-16 py-14 text-center border ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-purple-200'}`}>
+      <motion.div
+        key={review.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex items-center mb-4 justify-center">
+          <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mr-4">
+            {review.name ? review.name.split(' ').map((n: string) => n[0]).join('') : ''}
+          </div>
+          <div className="text-left">
+            <h3 className={`font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{review.name}</h3>
+            <div className="flex items-center space-x-1 mt-1">
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star key={i} className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'} fill-current`} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="relative mb-4 w-full">
-        <p className={`text-lg leading-relaxed italic mx-auto max-w-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{review.feedback || review.message}</p>
-      </div>
-      <div className="flex items-center justify-center gap-4 mt-4">
-        <button onClick={prev} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Previous Review">
-          <ArrowLeft className="w-5 h-5 text-purple-600" />
-        </button>
-        <span className="text-xs text-gray-400">{current + 1} / {reviews.length}</span>
-        <button onClick={next} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Next Review">
-          <ArrowRight className="w-5 h-5 text-purple-600" />
-        </button>
-      </div>
-    </motion.div>
+        <div className="relative mb-4 w-full">
+          <p className={`text-lg leading-relaxed italic mx-auto max-w-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{review.feedback || review.message}</p>
+        </div>
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <button onClick={prev} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Previous Review">
+            <ArrowLeft className="w-5 h-5 text-purple-600" />
+          </button>
+          <span className="text-xs text-gray-400">{current + 1} / {reviews.length}</span>
+          <button onClick={next} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Next Review">
+            <ArrowRight className="w-5 h-5 text-purple-600" />
+          </button>
+        </div>
+      </motion.div>
+    </div>
   );
 };
