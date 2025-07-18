@@ -35,6 +35,8 @@ const AdminPanel: React.FC = () => {
   const [projects, setProjects] = useState<any[]>([]);
   const [animations, setAnimations] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
+  const avgRating = reviews.length > 0 ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length) : 0;
+  const [reviewMsg, setReviewMsg] = useState('');
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showAnimationModal, setShowAnimationModal] = useState(false);
   const [newProject, setNewProject] = useState({ title: '', description: '', tech: '', date: '' });
@@ -58,6 +60,13 @@ const AdminPanel: React.FC = () => {
   const [editProjectLoading, setEditProjectLoading] = useState(false);
   const [deleteProjectLoading, setDeleteProjectLoading] = useState(false);
   const [deleteProjectId, setDeleteProjectId] = useState<string | null>(null);
+  // Add review editing state
+  const [editingReview, setEditingReview] = useState<any | null>(null);
+  const [editForm, setEditForm] = useState({ name: '', email: '', rating: 5, feedback: '', project: '' });
+  const [editLoading, setEditLoading] = useState(false);
+  // Add review delete state
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   // --- Star rendering helper ---
   const renderStars = (rating: number, size: string = 'w-5 h-5') =>
@@ -519,9 +528,6 @@ const AdminPanel: React.FC = () => {
               {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
-          <div className="mt-6 text-xs text-gray-400 text-center">
-            Demo: admin@example.com / admin123
-          </div>
           <button
             onClick={toggleTheme}
             className="mt-6 flex items-center justify-center px-3 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-purple-100 dark:hover:bg-purple-800 transition"
