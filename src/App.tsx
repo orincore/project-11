@@ -12,6 +12,7 @@ import AnimationGuide from './pages/AnimationGuide';
 import Footer from './components/Footer';
 import { ThemeProvider } from './context/ThemeContext';
 import ProjectDetails from './pages/ProjectDetails';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -61,22 +62,24 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/portfolio/:id" element={<ProjectDetails />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/animation-guide" element={<AnimationGuide />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
+      <HelmetProvider>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/portfolio/:id" element={<ProjectDetails />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/animation-guide" element={<AnimationGuide />} />
+            </Routes>
+            <Footer />
+          </div>
+        </Router>
+      </HelmetProvider>
     </ThemeProvider>
   );
 }

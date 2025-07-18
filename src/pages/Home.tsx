@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { Link } from 'react-router-dom';
 import adarshImg from '../assets/images/adarsh.jpg';
 import iciciLogo from '../assets/images/icici.png';
+import { Helmet } from 'react-helmet-async';
 
 const Home: React.FC = () => {
   const { isDarkMode } = useTheme();
@@ -54,7 +55,36 @@ const Home: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <>
+      <Helmet>
+        <title>Orincore | Building the Future of Web Development</title>
+        <meta name="description" content="Orincore Technologies: Innovative, high-quality web development and digital solutions. Recognized by ICICI Lombard. Explore our portfolio and client reviews." />
+        <meta name="keywords" content="Orincore, web development, digital solutions, portfolio, ICICI Lombard, client reviews, React, Node.js, TypeScript" />
+        <meta property="og:title" content="Orincore | Building the Future of Web Development" />
+        <meta property="og:description" content="Orincore Technologies: Innovative, high-quality web development and digital solutions. Recognized by ICICI Lombard." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://orincore.com/" />
+        <meta property="og:image" content="https://orincore.com/assets/logo/OClogo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Orincore | Building the Future of Web Development" />
+        <meta name="twitter:description" content="Orincore Technologies: Innovative, high-quality web development and digital solutions." />
+        <meta name="twitter:image" content="https://orincore.com/assets/logo/OClogo.png" />
+        <link rel="canonical" href="https://orincore.com/" />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Orincore Technologies",
+            "url": "https://orincore.com/",
+            "logo": "https://orincore.com/assets/logo/OClogo.png",
+            "description": "Innovative, high-quality web development and digital solutions. Recognized by ICICI Lombard.",
+            "sameAs": [
+              "https://www.linkedin.com/company/orincore",
+              "https://twitter.com/orincore"
+            ]
+          }
+        `}</script>
+      </Helmet>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 opacity-90" />
@@ -513,7 +543,7 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

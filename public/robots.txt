@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://orincore.com/sitemap.xml 
