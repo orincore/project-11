@@ -156,7 +156,7 @@ const Portfolio: React.FC = () => {
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                 } focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent`}
               />
-            </div>
+          </div>
             {/* Category Filters */}
             <div className="flex gap-2 justify-start max-w-full overflow-x-auto pb-1 whitespace-nowrap -mx-2 px-2">
               {categories.map((category) => (

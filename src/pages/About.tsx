@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Award, Users, Target, Zap, Calendar, MapPin, Mail, Phone } from 'lucide-react';
+import { Award, Users, Target, Zap, Calendar, MapPin, Mail, Phone, Code } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import adarshImg from '../assets/images/adarsh.jpg';
 import { Helmet } from 'react-helmet-async';
@@ -28,6 +28,30 @@ const About: React.FC = () => {
       icon: <Target className="w-8 h-8" />,
       title: "Results-Driven",
       description: "We focus on delivering measurable outcomes that drive business growth"
+    }
+  ];
+
+  // Add this new array for the four service cards
+  const services = [
+    {
+      icon: <Code className="w-8 h-8" />, 
+      title: "Full-Stack Development",
+      description: "End-to-end web applications with modern technologies"
+    },
+    {
+      icon: <Zap className="w-8 h-8" />, 
+      title: "Performance Optimization",
+      description: "Lightning-fast applications with optimized code"
+    },
+    {
+      icon: <Users className="w-8 h-8" />, 
+      title: "Client-Focused Solutions",
+      description: "Custom solutions tailored to your business needs"
+    },
+    {
+      icon: <Award className="w-8 h-8" />, 
+      title: "Quality Assurance",
+      description: "Rigorous testing and quality control processes"
     }
   ];
 
@@ -304,6 +328,45 @@ const About: React.FC = () => {
                 <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   {value.description}
                 </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Service Cards Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className={`text-4xl sm:text-5xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Our Services</h2>
+            <p className={`text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>What we deliver for our clients</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className={`p-6 rounded-xl text-center ${
+                  isDarkMode 
+                    ? 'bg-gray-800 hover:bg-gray-700' 
+                    : 'bg-white hover:bg-gray-50'
+                } shadow-lg hover:shadow-xl transition-all duration-300`}
+              >
+                <div className="text-purple-600 mb-4 flex justify-center">
+                  {service.icon}
+                </div>
+                <h3 className={`text-xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{service.title}</h3>
+                <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{service.description}</p>
               </motion.div>
             ))}
           </div>

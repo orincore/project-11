@@ -333,14 +333,9 @@ const Home: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className={`text-4xl sm:text-5xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-              Why Choose Orincore?
-            </h2>
-            <p className={`text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              We deliver exceptional results through our core strengths
-            </p>
+            <h2 className={`text-4xl sm:text-5xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Why Choose Orincore?</h2>
+            <p className={`text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>We deliver exceptional results through our core strengths</p>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <motion.div
@@ -356,17 +351,11 @@ const Home: React.FC = () => {
                     : 'bg-white hover:bg-gray-50'
                 } shadow-lg hover:shadow-xl transition-all duration-300`}
               >
-                <div className="mb-4 flex justify-center">
-                  <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
-                    {feature.icon}
-                  </span>
+                <div className="text-purple-600 mb-4 flex justify-center">
+                  {feature.icon}
                 </div>
-                <h3 className={`text-xl font-semibold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                  {feature.title}
-                </h3>
-                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {feature.description}
-                </p>
+                <h3 className={`text-xl font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{feature.title}</h3>
+                <p className={`text-sm leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -623,39 +612,39 @@ const BestReviewsSlider: React.FC = () => {
   const review = reviews[current];
   return (
     <div className={`w-full flex flex-col items-center max-w-4xl mx-auto rounded-2xl shadow-xl px-8 sm:px-16 py-14 text-center border ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-purple-200'}`}>
-      <motion.div
-        key={review.id}
+    <motion.div
+      key={review.id}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.5 }}
-      >
+      transition={{ duration: 0.5 }}
+    >
         <div className="flex items-center mb-4 justify-center">
-          <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mr-4">
-            {review.name ? review.name.split(' ').map((n: string) => n[0]).join('') : ''}
+        <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mr-4">
+          {review.name ? review.name.split(' ').map((n: string) => n[0]).join('') : ''}
+        </div>
+        <div className="text-left">
+          <h3 className={`font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{review.name}</h3>
+          <div className="flex items-center space-x-1 mt-1">
+            {Array.from({ length: 5 }, (_, i) => (
+              <Star key={i} className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'} fill-current`} />
+            ))}
           </div>
-          <div className="text-left">
-            <h3 className={`font-semibold text-lg ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{review.name}</h3>
-            <div className="flex items-center space-x-1 mt-1">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'} fill-current`} />
-              ))}
-            </div>
-          </div>
         </div>
-        <div className="relative mb-4 w-full">
-          <p className={`text-lg leading-relaxed italic mx-auto max-w-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{review.feedback || review.message}</p>
-        </div>
-        <div className="flex items-center justify-center gap-4 mt-4">
-          <button onClick={prev} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Previous Review">
-            <ArrowLeft className="w-5 h-5 text-purple-600" />
-          </button>
-          <span className="text-xs text-gray-400">{current + 1} / {reviews.length}</span>
-          <button onClick={next} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Next Review">
-            <ArrowRight className="w-5 h-5 text-purple-600" />
-          </button>
-        </div>
-      </motion.div>
+      </div>
+      <div className="relative mb-4 w-full">
+        <p className={`text-lg leading-relaxed italic mx-auto max-w-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{review.feedback || review.message}</p>
+      </div>
+      <div className="flex items-center justify-center gap-4 mt-4">
+        <button onClick={prev} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Previous Review">
+          <ArrowLeft className="w-5 h-5 text-purple-600" />
+        </button>
+        <span className="text-xs text-gray-400">{current + 1} / {reviews.length}</span>
+        <button onClick={next} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-purple-100 dark:hover:bg-purple-900 transition" title="Next Review">
+          <ArrowRight className="w-5 h-5 text-purple-600" />
+        </button>
+      </div>
+    </motion.div>
     </div>
   );
 };
