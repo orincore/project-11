@@ -239,7 +239,7 @@ const Portfolio: React.FC = () => {
                             href={project.repo_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x hover:bg-gray-700 transition text-xs font-semibold shadow"
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 transition text-xs font-semibold shadow"
                             title="View Repo"
                           >
                             <Github className="w-4 h-4 mr-1" /> Repo
@@ -250,7 +250,7 @@ const Portfolio: React.FC = () => {
                             href={project.live_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x hover:from-purple-700 hover:to-indigo-700 transition text-xs font-semibold shadow"
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 transition text-xs font-semibold shadow"
                             title="View Live"
                           >
                             <Globe className="w-4 h-4 mr-1" /> Live
@@ -258,7 +258,7 @@ const Portfolio: React.FC = () => {
                         )}
                         <button
                           onClick={() => navigate(`/portfolio/${project.id}`)}
-                          className="flex items-center gap-1 px-3 py-2 rounded-full bg-white border border-purple-200 hover:bg-purple-50 transition text-xs font-semibold shadow bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x"
+                          className="flex items-center gap-1 px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700 transition text-xs font-semibold shadow"
                           title="More Details"
                         >
                           <Eye className="w-4 h-4 mr-1" /> More Details
