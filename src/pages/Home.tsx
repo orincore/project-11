@@ -117,10 +117,10 @@ const Home: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="space-y-4"
             >
-              <p className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x max-w-3xl mx-auto">
-                Orincore is a leading web development and AI solutions company in Mumbai. Hire a React developer or AI expert for your next project. Building the future of web development.
+              <p className="text-xl sm:text-2xl font-semibold text-white max-w-3xl mx-auto">
+                Empowering innovation with world-class web and AI solutions.
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-lg font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
+              <div className="flex flex-wrap justify-center gap-4 text-lg font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x max-w-3xl mx-auto">
                 {['Innovative Solutions', 'Quality Development', 'Client Success'].map((phrase, index) => (
                   <motion.span
                     key={phrase}
