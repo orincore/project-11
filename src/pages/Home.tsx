@@ -181,33 +181,6 @@ const Home: React.FC = () => {
         </motion.div>
       </section>
 
-      {/* Recognition Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className={`rounded-2xl shadow-xl p-10 flex flex-col items-center text-center border ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-gray-200'}`}
-          >
-            <div className="mb-6 flex justify-center">
-              <img
-                src={iciciLogo}
-                alt="ICICI Lombard Logo"
-                className="h-20 w-auto object-contain drop-shadow-lg"
-                style={{ maxWidth: '220px' }}
-              />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x">
-              Recognised by ICICI Lombard
-            </h2>
-            <p className={`text-lg max-w-xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-black'}`}>
-              Orincore Technologies is proud to be recognised by ICICI Lombard for our commitment to innovation, reliability, and excellence in digital solutions. This recognition inspires us to deliver even greater value to our clients and partners.
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Best Reviews Slider Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
