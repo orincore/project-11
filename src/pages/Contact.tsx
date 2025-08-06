@@ -101,7 +101,12 @@ const Contact: React.FC = () => {
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Optionally, set an error message in the UI
+      if (error instanceof Error) {
+        console.error('Error details:', error.message);
+        if ('response' in error) {
+          console.error('Response:', error.response);
+        }
+      }
     } finally {
       setIsSubmitting(false);
       setTimeout(() => {
