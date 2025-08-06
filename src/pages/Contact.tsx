@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, Clock, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, Clock, CheckCircle, ChevronDown } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { Helmet } from 'react-helmet-async';
 
 const Contact: React.FC = () => {
   const { isDarkMode } = useTheme();
+  // Country code data
+  const countryCodes = [
+    { code: '+1', name: 'US (+1)' },
+    { code: '+91', name: 'IN (+91)' },
+    { code: '+44', name: 'UK (+44)' },
+    { code: '+61', name: 'AU (+61)' },
+    { code: '+65', name: 'SG (+65)' },
+    { code: '+971', name: 'AE (+971)' },
+    { code: '+86', name: 'CN (+86)' },
+    { code: '+81', name: 'JP (+81)' },
+    { code: '+82', name: 'KR (+82)' },
+    { code: '+60', name: 'MY (+60)' },
+  ];
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
+    countryCode: '+91', // Default to India
     subject: '',
     message: ''
   });
+  
+  const [isCountryCodeOpen, setIsCountryCodeOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<any>({});
@@ -27,6 +45,10 @@ const Contact: React.FC = () => {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
+    }
+    
+    if (formData.phone && !/^[\+\d\s\-\(\)]{10,}$/.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid phone number';
     }
     
     if (!formData.subject.trim()) {
@@ -53,14 +75,27 @@ const Contact: React.FC = () => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     try {
+      // Combine country code and phone number
+      const payload = {
+        ...formData,
+        phone: formData.phone ? `${formData.countryCode}${formData.phone.replace(/^\+?\d+/, '')}` : ''
+      };
+
       const res = await fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
         setIsSubmitted(true);
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ 
+          name: '', 
+          email: '', 
+          phone: '', 
+          countryCode: '+91', // Reset to default
+          subject: '', 
+          message: '' 
+        });
       } else {
         throw new Error('Failed to send message');
       }
@@ -332,6 +367,87 @@ const Contact: React.FC = () => {
                         className="mt-1 text-sm text-red-500"
                       >
                         {errors.email}
+                      </motion.p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6">
+                  <div>
+                    <label 
+                      className={`block text-sm font-medium mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}
+                    >
+                      Phone Number *
+                    </label>
+                    <div className="relative flex">
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setIsCountryCodeOpen(!isCountryCodeOpen)}
+                          className={`flex items-center h-full px-3 rounded-l-lg border-r-0 border ${
+                            isCountryCodeOpen ? 'ring-2 ring-purple-500 border-purple-500' : 'border-gray-300'
+                          } ${
+                            isDarkMode 
+                              ? 'bg-gray-700 text-white' 
+                              : 'bg-gray-50 text-gray-900'
+                          } focus:outline-none`}
+                        >
+                          <span className="mr-1">{formData.countryCode}</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform ${isCountryCodeOpen ? 'transform rotate-180' : ''}`} />
+                        </button>
+                        
+                        {isCountryCodeOpen && (
+                          <div className="absolute z-10 w-48 mt-1 bg-white rounded-md shadow-lg">
+                            <div className="py-1 max-h-60 overflow-auto">
+                              {countryCodes.map((country) => (
+                                <button
+                                  key={country.code}
+                                  type="button"
+                                  className={`block w-full text-left px-4 py-2 text-sm ${
+                                    formData.countryCode === country.code
+                                      ? 'bg-purple-100 text-purple-900'
+                                      : 'text-gray-700 hover:bg-gray-100'
+                                  }`}
+                                  onClick={() => {
+                                    setFormData(prev => ({
+                                      ...prev,
+                                      countryCode: country.code
+                                    }));
+                                    setIsCountryCodeOpen(false);
+                                  }}
+                                >
+                                  {country.name}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className={`flex-1 min-w-0 px-4 py-3 rounded-r-lg border-l-0 ${
+                          errors.phone 
+                            ? 'border-red-500 focus:ring-red-500' 
+                            : 'border-gray-300 focus:ring-purple-500 focus:border-purple-500'
+                        } ${
+                          isDarkMode 
+                            ? 'bg-gray-700 text-white placeholder-gray-400' 
+                            : 'bg-white text-gray-900 placeholder-gray-500'
+                        } focus:outline-none focus:ring-2 focus:border-transparent transition-colors`}
+                        placeholder="123 456 7890"
+                      />
+                    </div>
+                    {errors.phone && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-1 text-sm text-red-500"
+                      >
+                        {errors.phone}
                       </motion.p>
                     )}
                   </div>
