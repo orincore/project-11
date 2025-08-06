@@ -67,38 +67,110 @@ const Contact: React.FC = () => {
     e.preventDefault();
     
     if (!validateForm()) {
+      console.log('Form validation failed');
       return;
     }
     
     setIsSubmitting(true);
     
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+    const FORM2CHAT_API_KEY = import.meta.env.VITE_FORM2CHAT_API_KEY || 'your_api_key_here';
+    
+    console.log('API Base URL:', API_BASE_URL);
 
     try {
-      // Combine country code and phone number
+      // Format phone number for submission
+      let phoneNumber = '';
+      if (formData.phone) {
+        // Remove all non-digit characters except plus sign
+        let digits = formData.phone.replace(/[^\d+]/g, '');
+        
+        // If the number already starts with a country code, use it as is
+        if (digits.startsWith('+')) {
+          phoneNumber = digits;
+        } else {
+          // Otherwise, prepend the selected country code
+          phoneNumber = `${formData.countryCode}${digits}`;
+        }
+        
+        console.log('Formatted phone number for submission:', { 
+          original: formData.phone, 
+          countryCode: formData.countryCode,
+          cleanNumber: digits,
+          final: phoneNumber 
+        });
+      }
+      const messageText = formData.subject ? `Subject: ${formData.subject}\n\n${formData.message}` : formData.message;
+      
       const payload = {
-        ...formData,
-        phone: formData.phone ? `${formData.countryCode}${formData.phone.replace(/^\+?\d+/, '')}` : ''
+        name: formData.name,
+        email: formData.email,
+        phone: phoneNumber,
+        message: messageText
       };
 
-      const res = await fetch(`${API_BASE_URL}/contact`, {
+      console.log('Submitting form with payload to form2chat:', payload);
+
+      // Call form2chat API directly
+      const form2chatResponse = await fetch('https://form2chat.onrender.com/api/contact-form', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-api-key': FORM2CHAT_API_KEY,
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(payload)
       });
-      if (res.ok) {
-        setIsSubmitted(true);
-        setFormData({ 
-          name: '', 
-          email: '', 
-          phone: '', 
-          countryCode: '+91', // Reset to default
-          subject: '', 
-          message: '' 
-        });
-      } else {
-        throw new Error('Failed to send message');
+
+      console.log('form2chat API Response status:', form2chatResponse.status);
+      
+      let form2chatData;
+      try {
+        form2chatData = await form2chatResponse.json();
+        console.log('form2chat API Response data:', form2chatData);
+      } catch (e) {
+        console.error('Error parsing form2chat response JSON:', e);
+        const text = await form2chatResponse.text();
+        console.error('Raw form2chat response:', text);
+        throw new Error('Invalid response from form2chat API');
       }
+
+      if (!form2chatResponse.ok) {
+        console.error('form2chat API Error:', form2chatData);
+        throw new Error(form2chatData.message || 'Failed to send message to form2chat');
+      }
+
+      // Also submit to the original API if needed
+      console.log('Submitting to original API:', { ...payload, subject: formData.subject });
+      const res = await fetch(`${API_BASE_URL}/contact`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ ...payload, subject: formData.subject })
+      });
+
+      console.log('Original API Response status:', res.status);
+      
+      try {
+        const responseData = await res.json();
+        console.log('Original API Response data:', responseData);
+      } catch (e) {
+        console.error('Error parsing original API response:', e);
+      }
+
+      // If we get here, at least form2chat was successful
+      console.log('Form submitted successfully to form2chat');
+      setIsSubmitted(true);
+      setFormData({ 
+        name: '', 
+        email: '', 
+        phone: '', 
+        countryCode: '+91',
+        subject: '', 
+        message: '' 
+      });
     } catch (error) {
       console.error('Error submitting form:', error);
       if (error instanceof Error) {
@@ -117,14 +189,25 @@ const Contact: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
     
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev: any) => ({
+    // Special handling for phone number input
+    if (name === 'phone') {
+      // Only allow numbers, plus sign, and spaces
+      const cleanedValue = value.replace(/[^0-9+\s]/g, '');
+      setFormData(prev => ({
+        ...prev,
+        [name]: cleanedValue
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+    
+    // Clear error for this field if it exists
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev: Record<string, string>) => ({
         ...prev,
         [name]: ''
       }));
@@ -434,6 +517,27 @@ const Contact: React.FC = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
+                        onBlur={(e) => {
+                          // Format the phone number on blur
+                          const value = e.target.value.trim();
+                          if (value) {
+                            // Remove all non-digit characters except plus sign
+                            let digits = value.replace(/[^\d+]/g, '');
+                            // Format as +XX XXX XXX XXXX or similar
+                            if (digits.startsWith('+')) {
+                              // For international numbers
+                              const countryCode = digits.match(/^\+\d{1,3}/)?.[0] || '';
+                              const rest = digits.slice(countryCode.length).replace(/\D/g, '');
+                              const formatted = rest.replace(/(\d{3})(?=\d)/g, '$1 ');
+                              const newValue = `${countryCode} ${formatted}`.trim();
+                              setFormData(prev => ({ ...prev, phone: newValue }));
+                            } else {
+                              // For local numbers
+                              const formatted = digits.replace(/(\d{3})(?=\d)/g, '$1 ');
+                              setFormData(prev => ({ ...prev, phone: formatted }));
+                            }
+                          }
+                        }}
                         className={`flex-1 min-w-0 px-4 py-3 rounded-r-lg border-l-0 ${
                           errors.phone 
                             ? 'border-red-500 focus:ring-red-500' 
@@ -444,6 +548,7 @@ const Contact: React.FC = () => {
                             : 'bg-white text-gray-900 placeholder-gray-500'
                         } focus:outline-none focus:ring-2 focus:border-transparent transition-colors`}
                         placeholder="123 456 7890"
+                        required
                       />
                     </div>
                     {errors.phone && (
